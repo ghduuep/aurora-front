@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { authClient } from '@/lib/auth-client'
-import router from '@/router';
+import router from '@/router'
+
+const session = authClient.useSession();
 
 const logout = async () => {
   await authClient.signOut()
@@ -29,7 +31,7 @@ const logout = async () => {
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
         >
           <li>
-            <a class="justify-between"> Profile </a>
+            <router-link class="justify-between" to="/perfil"> Perfil </router-link>
           </li>
           <li><button @click="logout">Logout</button></li>
         </ul>

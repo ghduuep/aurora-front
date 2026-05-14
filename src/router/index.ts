@@ -1,4 +1,6 @@
 import LoginView from '@/components/LoginView.vue'
+import ViewProfile from '@/components/ViewProfile.vue'
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -9,9 +11,10 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/dashboard',
-      component: () => import('@/layouts/DefaultLayout.vue')
-    }
+      path: '/',
+      component: DefaultLayout,
+      children: [{ path: 'perfil', component: ViewProfile }],
+    },
   ],
 })
 
