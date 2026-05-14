@@ -12,10 +12,21 @@ const logout = async () => {
 </script>
 
 <template>
-  <div class="navbar bg-base-100 shadow-sm">
+  <div class="navbar bg-base-100 shadow-sm gap-4">
     <div class="flex-1">
       <a class="btn btn-ghost text-xl">AuroraCRM</a>
     </div>
+
+    <button class="btn" popovertarget="popover-1" style="anchor-name:--anchor-1">
+      Criar novo
+    </button>
+    <ul class="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+      popover id="popover-1" style="position-anchor:--anchor-1">
+      <li><a>Lead</a></li>
+      <li><a>Contato</a></li>
+      <li><a>Empresa</a></li>
+      <li><a>Tarefa</a></li>
+    </ul>
     <div class="flex gap-2">
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
