@@ -1,3 +1,4 @@
+import CreateUserForm from '@/components/CreateUserForm.vue'
 import LoginView from '@/components/LoginView.vue'
 import ViewProfile from '@/components/ViewProfile.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
@@ -13,7 +14,10 @@ const router = createRouter({
     {
       path: '/',
       component: DefaultLayout,
-      children: [{ path: 'perfil', component: ViewProfile }],
+      children: [
+        { path: 'perfil', component: ViewProfile },
+        { path: 'user', component: CreateUserForm },
+      ],
     },
   ],
 })
