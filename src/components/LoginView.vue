@@ -26,12 +26,9 @@ async function login() {
       error.value = result.error.message || 'Erro ao fazer login'
       return
     }
-
-    console.log(result)
-
-    router.push('/dashboard')
-  } catch (e: any) {
-    error.value = e.message || 'Erro ao fazer login'
+    router.push('/leads')
+  } catch (error) {
+    error.value = error instanceof Error ? error.message : 'Erro ao fazer login'
   } finally {
     loading.value = false
   }

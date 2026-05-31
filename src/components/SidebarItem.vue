@@ -12,5 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <li><a :href="link">{{ props.title }}</a></li>
+  <li>
+    <RouterLink :to="link">{{ props.title }}</RouterLink>
+  </li>
 </template>

@@ -15,21 +15,11 @@ const isSaving = ref(false)
 const error = ref('')
 
 const hasChanges = computed(() => {
-  return (
-    form.name !== '' ||
-    form.email !== '' ||
-    form.password !== '' ||
-    form.image !== ''
-  )
+  return form.name !== '' || form.email !== '' || form.password !== '' || form.image !== ''
 })
 
 const isFormComplete = computed(() => {
-  return (
-    form.name !== '' &&
-    form.email !== '' &&
-    form.password !== '' ||
-    form.image !== ''
-  )
+  return form.name !== '' && form.email !== '' && form.password !== ''
 })
 
 function cancelChanges() {
@@ -45,17 +35,15 @@ async function createUser() {
   try {
     isSaving.value = true
 
-    const res = await authClient.signUp.email({
+    const response = await authClient.signUp.email({
       name: form.name,
       email: form.email,
       password: form.password,
       image: form.image,
     })
 
-    console.log(res.error)
-
-    if (res.error) {
-      error.value = res.error.message || 'Erro ao criar usuário'
+    if (response.error) {
+      error.value = response.error.message || 'Erro ao criar usuário'
     }
   } finally {
     isSaving.value = false

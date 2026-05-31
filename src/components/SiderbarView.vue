@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { authClient } from '@/lib/auth-client';
-import SidebarItem from './SidebarItem.vue';
+import { authClient } from '@/lib/auth-client'
+import SidebarItem from './SidebarItem.vue'
 
-const session = authClient.useSession();
-
+const session = authClient.useSession()
 </script>
 
 <template>
@@ -14,6 +13,8 @@ const session = authClient.useSession();
     <SidebarItem link="/leads" title="Leads" />
     <SidebarItem link="/contacts" title="Contacts" />
     <SidebarItem link="/tasks" title="Tasks" />
-
+    <SidebarItem link="/activities" title="Activities" />
+    <SidebarItem link="/pipeline-stages" title="Pipeline Stages" />
+    <SidebarItem link="/tags" title="Tags" />
   </ul>
 </template>

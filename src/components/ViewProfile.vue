@@ -61,6 +61,7 @@ const passwordMatch = computed(() => {
 const isSaving = ref(false)
 
 const error = ref('')
+const success = ref('')
 
 function cancelChanges() {
   const user = session.value.data?.user
@@ -76,33 +77,32 @@ function cancelChanges() {
 
 async function saveProfile() {
   error.value = ''
+  success.value = ''
 
   try {
     isSaving.value = true
 
     if (hasProfileChanges.value) {
-      const payload: Record<string, any> = {}
-      
-            if (form.name != session.value.data?.user.name) payload.name = form.name
-            if (form.image != session.value.data?.user.image) payload.image = form.image
-      
-            const res = await authClient.updateUser(payload)
-            if (res.error) {
-              error.value = res.error.message || 'Ocorreu um erro ao atualizar o perfil'
-              return
-            }
+      const payload: { name?: string; image?: string } = {}
+
+      if (form.name !== session.value.data?.user.name) payload.name = form.name
+      if (form.image !== session.value.data?.user.image) payload.image = form.image
+
+      const response = await authClient.updateUser(payload)
+      if (response.error) {
+        error.value = response.error.message || 'Ocorreu um erro ao atualizar o perfil'
+        return
+      }
     }
 
     if (hasPasswordChanges.value && isPasswordFormValid.value) {
-      const res = await authClient.changePassword({
+      const response = await authClient.changePassword({
         currentPassword: passwordForm.currentPassword,
         newPassword: passwordForm.newPassword,
       })
 
-      console.log(res.error)
-
-      if (res.error) {
-        error.value = res.error.message || 'Ocorreu um erro ao alterar a senha'
+      if (response.error) {
+        error.value = response.error.message || 'Ocorreu um erro ao alterar a senha'
         return
       }
 
@@ -111,11 +111,7 @@ async function saveProfile() {
       passwordForm.confirmPassword = ''
     }
 
-    console.log(res)
-
-    if (res.error) {
-      error.value = res.error.message || 'Ocorreu um erro ao atualizar o perfil'
-    }
+    success.value = 'Perfil atualizado com sucesso'
   } finally {
     isSaving.value = false
   }
@@ -126,6 +122,9 @@ async function saveProfile() {
   <LoadingView v-if="session.isPending" />
 
   <div v-else class="flex justify-center flex-col">
+    <ToastView v-if="error" type="error" :message="error" />
+    <ToastView v-if="success" type="success" :message="success" />
+
     <PageHeader title="Seu perfil" paragraph="Veja e edita suas informações.">
       <template #actions>
         <button
@@ -189,7 +188,7 @@ async function saveProfile() {
           <div class="w-full">
             <label class="label p-0 pb-1 text-xs">Senha atual</label>
             <label class="input validator w-full">
-              <svg class="h-[1em] opacity-50" xmlns="http://w3.org" viewBox="0 0 24 24">
+              <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <g
                   stroke-linejoin="round"
                   stroke-linecap="round"
@@ -221,7 +220,7 @@ async function saveProfile() {
           <div class="w-full">
             <label class="label p-0 pb-1 text-xs">Nova senha</label>
             <label class="input validator w-full">
-              <svg class="h-[1em] opacity-50" xmlns="http://w3.org" viewBox="0 0 24 24">
+              <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <g
                   stroke-linejoin="round"
                   stroke-linecap="round"
@@ -252,7 +251,7 @@ async function saveProfile() {
           <div class="w-full">
             <label class="label p-0 pb-1 text-xs">Confirme nova senha</label>
             <label class="input validator w-full">
-              <svg class="h-[1em] opacity-50" xmlns="http://w3.org" viewBox="0 0 24 24">
+              <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <g
                   stroke-linejoin="round"
                   stroke-linecap="round"

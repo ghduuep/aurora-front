@@ -2,8 +2,6 @@
 import { authClient } from '@/lib/auth-client'
 import router from '@/router'
 
-const session = authClient.useSession();
-
 const logout = async () => {
   await authClient.signOut()
 
